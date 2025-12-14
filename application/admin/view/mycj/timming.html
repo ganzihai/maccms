@@ -2,8 +2,9 @@
     <div class="layui-tab-item layui-show layui-form layui-form-pane">
         <blockquote class="layui-elem-quote">
             <p>插件定时任务和程序定时任务区别如下：</p>
-            <p>插件定时任务：需要通过Python脚本运行，多线程多任务采集，采集速度快，不影响网页访问，点此查看教程设置</p>
+            <p>插件定时任务：需要通过Python脚本运行，多线程多任务采集，采集速度快，不影响网页访问，<a href="https://www.mycj.pro/364.html" target="_blank" class="layui-btn layui-btn-xs layui-bg-blue">查看教程</a></p>
             <p>程序定时任务：通过定时监控访问任务链接采集数据，php单线程采集，可能会导致网站加载卡、无反应、采集不完整等情况</p>
+            <p style="color:red;">如果需要修改定时采集任务数据，请重新添加定时任务</p>
         </blockquote>
         <script type="text/html" id="timmingDemo">
             <div class="layui-btn-container">
@@ -15,9 +16,14 @@
         </script>
         <table class="layui-hide" id="timmingTableId" lay-filter="timmingTableFilter"></table>
         <script type="text/html" id="timmingTableBar">
+            {{# if(d.timming_type == 1){ }}
+            {{# }else{ }}
+            <a href="{php}echo $GLOBALS['config']['site']['install_dir'];{/php}api.php/timming/index.html?enforce=1&name={{d.name}}" target="_blank" class="layui-btn layui-btn-xs layui-btn-primary layui-border">测试</a>
+            {{# } }}
             <a class="layui-btn layui-btn-xs layui-bg-red" lay-event="delete">删除</a>
         </script>
     </div>
 </div>
 <script>var timming_url = "{:url('mycj/timming')}";</script>    
-<script type="text/javascript" src="__STATIC__/mycj/js/timming.js?v={$cjinfo.version}"></script>
+<script type="text/javascript" src="{$mac_path}static/mycj/js/timming.js?v={$cjinfo.version}"></script>
+                        

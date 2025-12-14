@@ -18,8 +18,8 @@ return array (
   'site' => 
   array (
     'site_name' => '视频大全 - 杆子影视！',
-    'site_url' => 'v.zznuo.com',
-    'site_wapurl' => 'v.zznuo.com',
+    'site_url' => 'mv.ganzi.fun',
+    'site_wapurl' => 'mv.ganzi.fun',
     'site_keywords' => '短视频,搞笑视频,视频分享,免费视频,在线视频,预告片',
     'site_description' => '提供最新最快的视频分享数据',
     'site_icp' => 'icp123',
@@ -37,6 +37,7 @@ return array (
     'site_tj' => '统计代码',
     'site_status' => '1',
     'site_close_tip' => '站点暂时关闭，请稍后访问',
+    'mainland_ip_limit' => '0',
     'ads_dir' => 'ads',
     'mob_ads_dir' => 'ads',
     'new_version' => '0',
@@ -50,6 +51,7 @@ return array (
     'cache_port' => '',
     'cache_username' => 'ganzihai',
     'cache_password' => '54gerenwu',
+    'cache_db' => '0',
     'cache_flag' => '342669e229',
     'cache_core' => '0',
     'cache_time' => '',
@@ -419,6 +421,14 @@ return array (
       'typefilter' => '',
       'datafilter' => 'website_status=1',
       'cachetime' => '',
+      'auth' => '',
+    ),
+    'manga' => 
+    array (
+      'auth' => '',
+    ),
+    'publicapi' => 
+    array (
       'auth' => '',
     ),
   ),

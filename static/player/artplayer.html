@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport">
-<meta name="referrer" content="never">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -13,35 +12,23 @@
 <meta name="x5-page-mode" content="app">
 <title>ArtPlayer播放器</title>
 <script type="text/javascript" src="./artplayer/jquery.js"></script>
-<script type="text/javascript" src="./artplayer/artplayer.js?v=5.1.7"></script>
-<script type="text/javascript" src="./artplayer/artplayer.legacy.js?v=5.1.7"></script>
+<script type="text/javascript" src="./artplayer/artplayer.js?v=5.2.5"></script>
+<script type="text/javascript" src="./artplayer/artplayer-plugin-danmuku.js?v=5.1.8"></script>
+<script type="text/javascript" src="./artplayer/artplayer-plugin-ads.js?v=2.0.0"></script>	
 <script type="text/javascript" src="./artplayer/crypto-js.min.js"></script>
 <script type="text/javascript" src="./artplayer/hls.min.js"></script>
+<script type="text/javascript" src="./artplayer/zh-tw.js"></script>
+<script type="text/javascript" src="./artplayer/flv.min.js"></script>
 <style>
-    body,html { font: 24px "Microsoft YaHei", Arial, Lucida Grande, Tahoma, sans-serif; width: 100%; height: 100%; padding: 0; margin: 0; overflow-x: hidden; overflow-y: hidden; background-color: black; } .artplayer-app{width:100%;height:100%}
-    .artplayer-notice-list{position:absolute;bottom:80px;left:20px;z-index:100}.artplayer-notice-list .artplayer-notice{border-radius:2px;background:rgba(28,28,28,0.9);transition:all 0.3s ease-in-out;overflow:hidden;color:#fff;display:table;pointer-events:none;animation:showNotice 0.3s ease 1 forwards}.artplayer-notice-list .remove-notice{animation:removeNotice 0.3s ease 1 forwards}@keyframes showNotice{from{padding:0;font-size:0;margin-top:0}to{padding:7px 20px;font-size:14px;margin-top:5px}}@keyframes removeNotice{0%{padding:7px 20px;font-size:14px;margin-top:5px}20%{font-size:12px}21%{font-size:0;padding:7px 10px}100%{padding:0;margin-top:0;font-size:0}}.main{width:100%;position:absolute;z-index:1;text-align:center;left:50%;top:50%;transform:translate(-50%,-50%)}.loading{height:60px;width:60px;display:inline-block;vertical-align:middle;animation:Loading 0.6s steps(8,end) infinite;background:#000 url(./artplayer/load3.svg) no-repeat;background-size:100%;border-radius:50px;border:10px solid #000;box-sizing:border-box}@keyframes Loading{0%{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg)}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg)}}.tips{color:#fff;margin-top:5px;font-size:16px;font-weight:200;display:flex;flex-direction:row;flex-wrap:nowrap;align-content:center;justify-content:center;align-items:center}.tips span{color:rgb(255 0 123);font-weight:600;margin:5px}
-  </style>
+body,html{font:24px "Microsoft YaHei",Arial,Lucida Grande,Tahoma,sans-serif;width:100%;height:100%;padding:0;margin:0;overflow-x:hidden;overflow-y:hidden;background-color:black;}.artplayer-app{width:100%;height:100%}.artplayer-notice-list{position:absolute;bottom:80px;left:20px;z-index:100}.artplayer-notice-list .artplayer-notice{border-radius:2px;background:rgba(28,28,28,0.9);transition:all 0.3s ease-in-out;overflow:hidden;color:#fff;display:table;pointer-events:none;animation:showNotice 0.3s ease 1 forwards}.artplayer-notice-list .remove-notice{animation:removeNotice 0.3s ease 1 forwards}@keyframes showNotice{from{padding:0;font-size:0;margin-top:0}to{padding:7px 20px;font-size:14px;margin-top:5px}}@keyframes removeNotice{0%{padding:7px 20px;font-size:14px;margin-top:5px}20%{font-size:12px}21%{font-size:0;padding:7px 10px}100%{padding:0;margin-top:0;font-size:0}}.ec-listbox{-webkit-transform:scale(1);transform:scale(0);transition:all .3s ease-in-out;position:fixed;right:0;top:0;z-index:10001;float:right;height:100%;overflow-y:hidden;margin-left:-336px;width:280px}.ec-listbox .anthology-wrap{height:100%;background-color:rgb(0 0 0 / 50%);}.ec-listbox .normal-title-wrap{padding:1px 20px}.ec-listbox .thesis-wrap{width:100%;height:26px;line-height:26px}.ec-listbox .title-link{display:block;float:left;width:180px;font-size:16px;color:hsla(0,0%,100%,.87)}.ec-listbox .title-info{max-height:34px;width:100%;font-size:12px;line-height:17px;overflow:hidden;margin-top:10px;color:hsla(0,0%,100%,.6)}.ec-listbox .scroll-area{padding:0 20px;font-size:14px;height:calc(100% - 93px);position:relative;overflow:auto;scrollbar-track-color:#1f1f1f;scrollbar-arrow-color:#1f1f1f;scrollbar-base-color:#1f1f1f;scrollbar-face-color:#979797;scrollbar-3dlight-color:#979797;scrollbar-highlight-color:#979797;scrollbar-shadow-color:#979797}.ec-listbox .anthology-content{width:100%;font-size:0}.ec-listbox .box-item{font-size:14px;background:#45504fc7;width:48%;height:40px;line-height:40px;border-radius:4px;text-align:center;color:#fff;display:inline-block;box-sizing:border-box;margin:1%;padding:0 10px}.ec-listbox .video-list-cl{text-align:right;right:10px;font-size:16px;position:relative;height:0px;line-height:33px;z-index:9999;}.ec-listbox .component-title{position:relative;height:20px;line-height:20px;display:block;margin:12px 0 16px;color:hsla(0,0%,100%,.6)}.ec-listbox .cover{position:relative;float:left;margin-right:10px;font-size:12px;height:100%;overflow:hidden}.ec-listbox .anthology-title-wrap{position:absolute;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);left:128px;width:144px;overflow:hidden}.ec-listbox .anthology-title-wrap .title{margin-bottom:8px;font-size:14px;line-height:20px;max-height:40px;overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis;word-break:break-all;display:-webkit-box;-webkit-box-orient:vertical;color:hsla(0,0%,100%,.87)}.ec-listbox .anthology-title-wrap .subtitle{color:hsla(0,0%,100%,.38);white-space:nowrap;overflow:hidden;font-size:12px;bottom:0;height:17px;line-height:17px}.ec-listbox .ec-selset-list{display:none}.ec-stting{-webkit-transform:scale(1) !important;transform:scale(1) !important}.vodlist-of{position:absolute;top:0;bottom:0;left:0;right:0;z-index:1001;display:none}.ec-show{display:block!important}.album-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-o-text-overflow:ellipsis}.ec-this,.scroll-area a:hover{color:#61f6ff!important}.ec-logo{z-index:99;pointer-events:none;position:absolute;width:100px;height:55px;opacity:.6}.ec-logo img{max-width:100%;max-height:100%;background:0 0}.main{width:100%;position:absolute;z-index:1;text-align:center;left:50%;top:50%;transform:translate(-50%,-50%)}.loading{height:60px;width:60px;display:inline-block;vertical-align:middle;animation:Loading 0.6s steps(8,end) infinite;background:#000 url(./artplayer/load3.svg) no-repeat;background-size:100%;border-radius:50px;border:10px solid #000;box-sizing:border-box}@keyframes Loading{0%{-webkit-transform:rotate3d(0,0,1,0deg);transform:rotate3d(0,0,1,0deg)}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg)}}.tips{color:#fff;margin-top:5px;font-size:16px;font-weight:200;display:flex;flex-direction:row;flex-wrap:nowrap;align-content:center;justify-content:center;align-items:center}</style>
 </head>
 <body>
-    <div class="main">
-      <div class="loading"></div>
-      <div class="tips">
-        资源正在加载中
-        <span class="clock">5</span>
-      </div>
-    </div>
-    <script>
-      var t = 5
-      var time = document.getElementsByClassName('clock')[0]
-      function fun() {
-        t--
-        time.innerHTML = t
-        if (t <= 0) {
-          clearInterval(inter)
-        }
-      }
-      var inter = setInterval('fun()', 1000)
-    </script>    
-<script type="text/javascript" src="./artplayer/player.js?v=1.0.0"></script>
+	<div class="main">
+		<div class="loading"></div>
+		<div class="tips">
+			播放器加载中...
+		</div>
+	</div>	
+	<script type="text/javascript" src="./artplayer/player.js?v=2.0.0"></script>
 </body>
 </html>

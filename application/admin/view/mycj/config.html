@@ -1,5 +1,23 @@
 <style>
-.layui-form-item .color-screen{width:50px;margin-right:0px;margin:0 0 0px 0px;}@media screen and (max-width:450px){.wap-input .layui-input{width:100px;display:inline-block;margin:0;float:none;left:0;width:100px;float:left;}.layui-form-item .color-screen{left:0px;display:inline-block;margin-bottom:auto;}}
+.layui-form-item .color-screen {
+    width: 50px;
+    margin-left: 5px;
+}
+@media screen and (max-width:450px) {
+	.wap-input .layui-input {
+        display:inline-block;
+        margin:0;
+        float:none;
+        left:0;
+        width:100px;
+    }
+    .layui-form-item .color-screen {
+			left:2px;
+			display:inline-block;
+			margin-bottom:auto;
+			margin: 0 0 0 0;
+		}
+}
 </style>
 <div class="page-container">
     <div class="layui-tab layui-tab-brief" lay-filter="tab-filter">
@@ -37,7 +55,9 @@
                   </div>
                   <div class="layui-form-mid layui-word-aux">填写解析接口地址，多个换行填写，可在“播放配置”中，下拉选择</div>
               </div>
-
+              <blockquote class="layui-elem-quote">
+                <p>如果你用不到Python采集脚本，不用站外入库，那么下方的开关不用打开</p>
+              </blockquote>
               <div class="layui-form-item">
                 <label class="layui-form-label">接口开关</label>
                 <div class="layui-input-inline">
@@ -120,8 +140,8 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">播放倍速</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="player[rate]" value="{$player.rate|default='0.5,0.75,1,1.5,1.75,2,3'}" placeholder="0.5,1,1.5,2,3" class="layui-input "></div>
-                            <div class="layui-form-mid layui-word-aux">播放器控制栏倍速设置。英文逗号分隔，默认0.5,0.75,1,1.5,1.75,2,3</div>
+                                <input type="text" name="player[rate]" value="{$player.rate|default='0.5,0.75,1,1.25,1.5,2,3'}" placeholder="0.5,1,1.5,2,3" class="layui-input "></div>
+                            <div class="layui-form-mid layui-word-aux">播放器控制栏倍速设置。英文逗号分隔，默认0.5,0.75,1,1.25,1.5,2,3</div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">背景图片</label>
@@ -151,8 +171,7 @@
                             <label class="layui-form-label">播放器语言</label>
                             <div class="layui-input-inline">
                                 <select name="player[lang]">
-                                    <option value="0" selected>默认</option>
-                                    <option value="zh-cn">中文</option>
+                                    <option value="zh-cn" selected>中文</option>
                                     <option value="en">英文</option>
                                     <option value="zh-tw">繁体中文</option>
                                 </select>
@@ -160,14 +179,8 @@
                             <div class="layui-form-mid layui-word-aux">播放器前端页面语言设置</div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">自动下一集</label>
-                            <div class="layui-input-inline">
-                                <input type="checkbox" name="player[next]" lay-skin="switch" lay-text="开|关" {if condition="$player.next eq 'on'" }checked{/if}></div>
-                            <div class="layui-form-mid layui-word-aux">如果有多集视频，是否开启自动下一集</div>
-                        </div>
-                        <div class="layui-form-item">
                             <label class="layui-form-label">进度条颜色</label>
-                            <div class="layui-input-inline wap-input">
+                            <div class="layui-input-inline wap-input" style="margin:0 0 0 0!important;float:left;">
                                 <input type="text" id="color1" name="player[color]" value="{$player.color|default='#c93bf4'}" placeholder="请选择颜色" class="layui-input"></div>
                             <div class="layui-input-inline color-screen">
                                 <div id="color11"></div>
@@ -188,6 +201,17 @@
                             <div class="layui-form-mid layui-word-aux">自定义播放器右键,说明：前面写名称，用英文逗号分隔，后面填写网址，需加http开头；多个换行填写
                                 <br>例子：萌芽采集,https://www.mycj.pro/</div>
                         </div>
+                        <div class="layui-form-item">
+							<label class="layui-form-label">
+								自定义代码
+							</label>
+							<div class="layui-input-inline" style="width:300px;">
+								<textarea name="player[script]" lay-verify="script" class="layui-textarea" placeholder="自定义JavaScript代码">{$player.script|base64_decode}</textarea>
+							</div>
+							<div class="layui-form-mid layui-word-aux">
+								可以填写广告联盟代码，或者统计代码；代码需要包含&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#62;&#32;&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;标签
+							</div>
+						</div>
                         <!--自定义json解析接口-->
                         <blockquote class="layui-elem-quote">
                             <p>如果你不懂什么是解析接口，要如何使用，可以保持默认不用管</p>
@@ -197,9 +221,9 @@
                         </blockquote>
                         <div class="layui-form-item">
                             <label class="layui-form-label">Json接口</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="player[json]" value="{$player.json}" placeholder="第三方json解析接口" class="layui-input "></div>
-                            <div class="layui-form-mid layui-word-aux">可自定义第三方json解析接口</div>
+                            <div class="layui-input-block">
+                                <textarea name="player[json]" class="layui-textarea" placeholder="第三方json解析接口,多个换行">{$player.json}</textarea>
+                            </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">指定标识</label>
@@ -213,7 +237,14 @@
                 <fieldset class="layui-elem-field">
                   <legend>弹幕设置<input type="checkbox" name="player[danmu][status]" lay-skin="switch" lay-text="开|关" lay-filter="dm-status" {if condition="$player.danmu.status eq 'on'" }checked{/if}></legend>
                   <div class="layui-field-box player-dm-setting" {if condition="$player.danmu.status neq 'on'" }style="display: none;"{/if}>
- 
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">弹幕API</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="player[danmu][api]" value="{$player.danmu.api}" class="layui-input" placeholder="弹幕API接口地址">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux"> 弹幕API接口地址,请填写json接口,不支持xml接口</div>
+                    </div>
+
                     <div class="layui-form-item">
                         <label class="layui-form-label">持续时间</label>
                         <div class="layui-input-inline">
@@ -231,7 +262,7 @@
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label"> 弹幕颜色 </label>
-                        <div class="layui-input-inline wap-input">
+                        <div class="layui-input-inline wap-input" style="margin:0 0 0 0!important;float:left;">
                             <input type="text" id="color2" name="player[danmu][color]" value="{$player.danmu.color|default='#ffffff'}" placeholder="请选择颜色" class="layui-input">
                         </div>
                         <div class="layui-input-inline color-screen">
@@ -266,8 +297,8 @@
                             <textarea name="player[danmu][pbgjz]" class="layui-textarea" placeholder="输入关键字" >{$player.danmu.pbgjz|default='草,操,妈,逼,滚,网址,AV,黄片,网站,支付,企,关注,wx,微信,qq,QQ'}</textarea>
                         </div>
                         <div class="layui-form-mid layui-word-aux">发送弹幕禁用的关键词，输入关键字以","隔开</div>
-                    </div>
 
+                    </div>
                   </div>
                 </fieldset>      
                 <fieldset class="layui-elem-field">
@@ -438,4 +469,4 @@
     var danmu_url = "{:url('mycj/danmu_data')}";
     var upload_url = "{:url('upload/upload',['flag'=>'files'])}";
   </script>
-  <script type="text/javascript" src="__STATIC__/mycj/js/config.js?v={$cjinfo.version}"></script>
+  <script type="text/javascript" src="{$mac_path}static/mycj/js/config.js?v={$cjinfo.version}"></script>
