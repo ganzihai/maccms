@@ -14,11 +14,11 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址，从环境变量 DB_HOST 读取，否则使用默认值（Zeabur内部连接名）
-    'hostname'        => getenv('DB_HOST') ?: 'mysql.zeabur.internal',
+    'hostname'        => getenv('DB_HOST') ?: '127.0.0.1',
     // 数据库名，从环境变量 DB_DATABASE 读取
-    'database'        => getenv('DB_DATABASE') ?: 'zeabur',
+    'database'        => getenv('DB_DATABASE') ?: 'maccms',
     // 用户名，从环境变量 DB_USERNAME 读取
-    'username'        => getenv('DB_USERNAME') ?: 'root',
+    'username'        => getenv('DB_USERNAME') ?: 'maccms',
     // 密码，从环境变量 DB_PASSWORD 读取
     'password'        => getenv('DB_PASSWORD') ?: '',
   
