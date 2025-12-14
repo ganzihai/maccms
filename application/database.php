@@ -26,6 +26,7 @@ return [
         \PDO::MYSQL_ATTR_SSL_CA => '/etc/ssl/certs/tidb_ca.pem',
         // 额外的 SSL 验证选项 (可选，增加安全性)
         \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
+    ],
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
