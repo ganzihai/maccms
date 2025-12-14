@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>videojs播放器</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=11" />
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<link rel="stylesheet" href="./videojs/video-js.min.css">
+	<script type="text/javascript" src="./videojs/video.min.js"></script>
+	<script type="text/javascript" src="./videojs/videojs-http-streaming.min.js"></script>
+    <script type="text/javascript" src="./videojs/videojs.hotkeys.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	
+	<style type="text/css">html,body{background-color:#000;padding:0;margin:0;height:100%;width:100%;color:#999;overflow:hidden;}#video,.video{height:100% !important;width:100% !important;}#stats{position:fixed;top:5px;left:10px;font-size:12px;color:#fdfdfd;z-index:2147483647;text-shadow:1px 1px 1px #000,1px 1px 1px #000}
+  .vjs-poster{
+    background-color: #161616;
+  }	
+  /* 中间大的播放按钮 */
+  .video-js .vjs-big-play-button{ 
+    font-size: 2.5em;
+    line-height: 2.3em;
+    height: 2.5em;
+    width: 2.5em;
+    -webkit-border-radius: 2.5em;
+    -moz-border-radius: 2.5em;
+    border-radius: 2.5em;
+    background-color: rgba(115,133,159,.5);
+    border-width: 0.12em;
+    margin-top: -1.25em;
+    margin-left: -1.75em;
+    border-color: #ffb845 !important; /*暂停按钮颜色*/
+  }
+  /*暂停按钮颜色
+  .vjs-icon-play:before, .video-js .vjs-play-control .vjs-icon-placeholder:before, .video-js .vjs-big-play-button .vjs-icon-placeholder:before{
+    color: #ffb845 !important;  
+  }*/  
+  
+  /* 视频暂停时显示播放按钮 */
+ .video-js.vjs-paused .vjs-big-play-button{ 
+    display: block;
+  } 
+ /* 视频加载出错时隐藏播放按钮 */
+.video-js.vjs-error .vjs-big-play-button{ 
+    display: none;
+  }
+ /* 加载圆圈 */
+  .vjs-loading-spinner { 
+    font-size: 2.5em;
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    margin-top: -1em;
+    margin-left: -1.5em;
+  } 
+.video-js .vjs-control-bar {
+	height:5em;
+}
+.video-js .vjs-button > .vjs-icon-placeholder::before {
+	font-size:3em;
+}
+.video-js .vjs-progress-holder {
+	height:0.6em;
+}
+.video-js .vjs-play-progress::before {
+	font-size:1.2em;
+	top:-.1em;
+}
+.video-js .vjs-volume-bar {
+	margin:2.3em .45em;
+}
+.video-js .vjs-volume-bar.vjs-slider-horizontal {
+	height:.4em;
+}
+.video-js .vjs-slider-horizontal .vjs-volume-level::before {
+	top:-.2em;
+}
+.video-js .vjs-time-control {
+	font-size:1.4em;
+	line-height:3.3em;
+}
+.video-js .vjs-playback-rate {
+	font-size:1.4em;
+}
+.video-js .vjs-playback-rate .vjs-playback-rate-value {
+	line-height:2.2em;
+}
+/* 进度条背景色 */
+.video-js .vjs-play-progress{
+   color: #ffb845;
+   background-color: #ffb845;
+} 
+	</style>	
+</head>
+<body>
+        <div class="video" id="player">
+            <video id="video" class="video-js vjs-big-play-centered" controls="controls" playsinline="true" webkit-playsinline="true" x-webkit-airplay="allow" x5-video-player-fullscreen="true" preload="auto">	  
+            </video>
+        </div>	
+        <script type="text/javascript" src="./videojs/setting.js"></script>
+    </body>
+
+</html>

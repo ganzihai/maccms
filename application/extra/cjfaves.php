@@ -1,0 +1,51 @@
+<?php
+return array (
+  0 => 
+  array (
+    'name' => '黑木耳资源站',
+    'rema' => '影视资源,每日更新',
+    'flag' => 'heimuer',
+    'apis' => 'https://mycj-json.heimuer.xyz/api.php/provide/vod/at/json/',
+    'zylink' => 'https://heimuer.tv/',
+    'coll' => '黑木耳资源,heimuer,1000,1',
+    'type' => '2',
+    'filter' => '0',
+    'filter_from' => '',
+    'opt' => '0',
+    'sync_pic_opt' => '0',
+    'tips' => '<span class="layui-badge layui-bg-green">我的收藏</span>',
+    'collect_mid' => 1,
+    'xml_api' => 'https://mycj-json.heimuer.xyz/api.php/provide/vod/at/xml/',
+    'qunlink' => 'https://t.me/heimuertv',
+  ),
+  1 => 
+  array (
+    'name' => '搜AV资源站',
+    'rema' => '精美封面,高清播放',
+    'flag' => 'souavzy',
+    'apis' => 'https://api.souavzy.vip/api.php/provide/vod/',
+    'zylink' => 'https://souavzy.com/',
+    'coll' => '搜AV资源,souav,1000,1',
+    'type' => '2',
+    'filter' => '0',
+    'filter_from' => '',
+    'opt' => '0',
+    'sync_pic_opt' => '2',
+    'tips' => '<span class="layui-badge layui-bg-green">我的收藏</span>',
+    'collect_mid' => 1,
+  ),
+  2 => 
+  array (
+    'flag' => 'dyttzy',
+    'name' => '电影天堂资源',
+    'rema' => '没有跑马灯,没有插播,首家无广告',
+    'apis' => 'http://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/json/',
+    'xml_api' => 'http://caiji.dyttzyapi.com/api.php/provide/vod/from/dyttm3u8/at/xml/',
+    'tips' => '<span class="layui-badge layui-bg-green">我的收藏</span>',
+    'coll' => '电影天堂1,dyttm3u8,1000,1',
+    'mid' => '1',
+    'type' => '2',
+    'zylink' => 'http://dyttzy.tv/',
+    'qunlink' => 'https://t.me/dyttzytv',
+  ),
+);

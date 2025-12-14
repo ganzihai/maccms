@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>杆子播放器</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=11" />
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+	<script type="text/javascript" src="/static/player/dplayer/flv.min.js"></script>
+	<script type="text/javascript" src="/static/player/dplayer/hls.min.js"></script>
+	<script type="text/javascript" src="/static/player/dplayer/dplayer.min.js"></script>
+	<script type="text/javascript" src="/static/player/dplayer/ganzi.pg.js"></script>
+<style>
+html,body{width:100%;height:100%; padding:0; margin:0;}#DPlayer{width:100%;height:100%;}
+.dplayer-logo { pointer-events: none;position: absolute;right: 20px;top: 20px;max-width: 80px;max-height: 80px;}
+.dplayer-logo img { max-width: 100%;max-height: 100%;background: none;}
+.dplayer-notice {bottom: 28px;left: 45%;color: #33ff00;padding: 7px 7px;}</style>
+</head>
+<body marginwidth="0" marginheight="0">
+<div id="DPlayer"></div>
+<script type="text/javascript">
+var url=parent.MacPlayer.PlayUrl;
+    var type='normal';
+    var live=false;
+    if(url.indexOf('.m3u8')>-1){
+        type='hls';
+        live=false;
+    }else if(url.indexOf('magnet:')>-1){
+        type='webtorrent';
+    }else if(url.indexOf('.flv')>-1){
+        type='flv';
+    }else if(url.indexOf('.mpd')>-1){
+        type='dash';
+    }
+	var dp = new DPlayer({
+		container: document.getElementById('DPlayer'),
+		autoplay: true,
+		screenshot: true,
+		video: {
+			url: url,
+			pic:'dplayer/11144562496.jpg',
+			live: live,
+			type:type,
+		},
+		highlight:[{
+			time: timeToSec('tiaoguopiantou_'+ccid),
+			text: '跳过片头时间',
+		},
+		{
+			time: timeToSec('tiaoguopianwei_'+ccid),
+			text: '跳过片尾时间',
+		}],
+	});
+</script>
+<script type="text/javascript" src="/static/player/dplayer/ganzi.player.js"></script>
+</body>
+</html>
