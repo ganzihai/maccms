@@ -9,18 +9,32 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libzip-dev \
     unzip \
+    # 安装 vim 等调试工具 (仅在开发阶段需要，正式环境可删除)
+    # vim \
+    \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache
 
-# 2. 启用 Apache Rewrite 模块 (用于 Maccms 伪静态)
+# 2. **【核心修复和优化】** 配置 Opcache
+# 创建一个自定义的 php.ini 配置片段文件
+COPY --from=mlocati/php-extension-installer /usr/local/bin/install-php-extensions /usr/local/bin/
+RUN touch /usr/local/etc/php/conf.d/opcache-custom.ini \
+    && echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache-custom.ini \
+    && echo "opcache.memory_consumption=128" >> /usr/local/etc/php/conf.d/opcache-custom.ini \
+    && echo "opcache.interned_strings_buffer=8" >> /usr/local/etc/php/conf.d/opcache-custom.ini \
+    && echo "opcache.max_accelerated_files=10000" >> /usr/local/etc/php/conf.d/opcache-custom.ini \
+    && echo "opcache.revalidate_freq=0" >> /usr/local/etc/php/conf.d/opcache-custom.ini \
+    && echo "opcache.validate_timestamps=0" >> /usr/local/etc/php/conf.d/opcache-custom.ini 
+
+# 3. 启用 Apache Rewrite 模块 (用于 Maccms 伪静态)
 RUN a2enmod rewrite
 
-# 3. 复制当前目录所有文件到容器的 Web 根目录
+# 4. 复制当前目录所有文件到容器的 Web 根目录
 COPY . /var/www/html/
 
-# 4. 设置权限，确保 www-data 用户可以写入 (关键，否则后台无法保存配置)
+# 5. 设置权限，确保 www-data 用户可以写入 (关键，否则后台无法保存配置)
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# 5. 清理 apt 缓存减小镜像体积
+# 6. 清理 apt 缓存减小镜像体积
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

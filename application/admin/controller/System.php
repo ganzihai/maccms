@@ -48,10 +48,15 @@ class System extends Base
 
         $options = [
             'type' => $param['type'],
+            'host' => $param['host'],
             'port' => $param['port'],
             'username' => $param['username'],
             'password' => $param['password']
         ];
+
+        if ($param['type'] == 'redis' && isset($param['db']) && intval($param['db']) > 0) {
+            $options['select'] = intval($param['db']);
+        }
 
         $hd = Cache::connect($options);
         $hd->set('test', 'test');
@@ -513,6 +518,7 @@ class System extends Base
             $config_new['api']['vod']['auth'] = mac_replace_text($config_new['api']['vod']['auth'], 2);
             $config_new['api']['art']['auth'] = mac_replace_text($config_new['api']['art']['auth'], 2);
             $config_new['api']['actor']['auth'] = mac_replace_text($config_new['api']['actor']['auth'], 2);
+            $config_new['api']['manga']['auth'] = mac_replace_text($config_new['api']['manga']['auth'], 2);
             $config_new['api']['publicapi']['auth'] = mac_replace_text($config_new['api']['publicapi']['auth'], 2);
 
             $config_old = config('maccms');
@@ -529,6 +535,18 @@ class System extends Base
             $config['api']['publicapi'] = [
                 'status' => '0',
                 'charge' => '0',
+                'auth' => '',
+            ];
+        }
+        if(!isset($config['api']['manga'])){
+            $config['api']['manga'] = [
+                'status' => '0',
+                'charge' => '0',
+                'pagesize' => '20',
+                'imgurl' => '',
+                'typefilter' => '',
+                'datafilter' => 'manga_status=1',
+                'cachetime' => '',
                 'auth' => '',
             ];
         }
@@ -622,6 +640,12 @@ class System extends Base
             if (empty($config_new['collect']['comment']['uprule'])) {
                 $config_new['collect']['comment']['uprule'] = [];
             }
+            if (empty($config_new['collect']['manga']['inrule'])) {
+                $config_new['collect']['manga']['inrule'] = ['a'];
+            }
+            if (empty($config_new['collect']['manga']['uprule'])) {
+                $config_new['collect']['manga']['uprule'] = [];
+            }
 
             $config_new['collect']['vod']['inrule'] = ',' . join(',', $config_new['collect']['vod']['inrule']);
             $config_new['collect']['vod']['uprule'] = ',' . join(',', $config_new['collect']['vod']['uprule']);
@@ -635,6 +659,8 @@ class System extends Base
             $config_new['collect']['website']['uprule'] = ',' . join(',', $config_new['collect']['website']['uprule']);
             $config_new['collect']['comment']['inrule'] = ',' . join(',', $config_new['collect']['comment']['inrule']);
             $config_new['collect']['comment']['uprule'] = ',' . join(',', $config_new['collect']['comment']['uprule']);
+            $config_new['collect']['manga']['inrule'] = ',' . join(',', $config_new['collect']['manga']['inrule']);
+            $config_new['collect']['manga']['uprule'] = ',' . join(',', $config_new['collect']['manga']['uprule']);
 
             $config_new['collect']['vod']['namewords'] = mac_replace_text($config_new['collect']['vod']['namewords'], 2);
             $config_new['collect']['vod']['thesaurus'] = mac_replace_text($config_new['collect']['vod']['thesaurus'], 2);
@@ -766,6 +792,9 @@ class System extends Base
             $config['site'] = [];
         }
         $config['site']['new_version'] = $param['version'];
+        if (!is_writable(APP_PATH . 'extra/maccms.php')) {
+            return $this->error(APP_PATH . 'extra/maccms.php' . lang('install/write_read_err'));
+        }
         $res = mac_arr2file(APP_PATH . 'extra/maccms.php', $config);
         if ($res === false) {
             return $this->error(lang('save_err'));

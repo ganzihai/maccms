@@ -135,9 +135,9 @@
                         <label class="layui-form-label">{:lang('admin/system/config/site_polyfill')}：</label>
                         <div class="layui-input-inline w300">
                             <input type="radio" name="site[site_polyfill]" value="0" title="{:lang('close')}" {if
-                                condition="$config['site']['site_polyfill'] eq 0" }checked {/if}>
+                                condition="!isset($config['site']['site_polyfill']) or $config['site']['site_polyfill'] eq 0" }checked {/if}>
                             <input type="radio" name="site[site_polyfill]" value="1" title="{:lang('open')}" {if
-                                condition="!isset($config['site']['site_polyfill']) or $config['site']['site_polyfill'] eq 1"
+                                condition="$config['site']['site_polyfill'] eq 1"
                                 }checked {/if}>
                         </div>
                         <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/site_polyfill_tip')}
@@ -197,6 +197,21 @@
                                 placeholder="">{$config['site']['site_close_tip']}</textarea>
                         </div>
                     </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">{:lang('admin/system/config/mainland_ip_limit')}：</label>
+                        <div class="layui-input-inline w350">
+                            <input type="radio" name="site[mainland_ip_limit]" value="0" title="{:lang('close')}" {if
+                                condition="$config['site']['mainland_ip_limit'] eq 0 or !isset($config['site']['mainland_ip_limit'])" }checked {/if}>
+                            <input type="radio" name="site[mainland_ip_limit]" value="1" title="{:lang('admin/system/config/mainland_ip_only_allow')}" {if
+                                condition="$config['site']['mainland_ip_limit'] eq 1" }checked {/if}>
+                            <input type="radio" name="site[mainland_ip_limit]" value="2" title="{:lang('admin/system/config/mainland_ip_not_allow')}" {if
+                                condition="$config['site']['mainland_ip_limit'] eq 2" }checked {/if}>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">{:lang('admin/system/config/mainland_ip_limit_tip')}</div>
+                    </div>
+
+                    
                 </div>
 
                 <div class="layui-tab-item" id="movementTable">
@@ -289,6 +304,12 @@
                             <input type="text" name="app[cache_password]"
                                 placeholder="{:lang('admin/system/config/cache_password_tip')}"
                                 value="{$config['app']['cache_password']}" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">DB：</label>
+                        <div class="layui-input-inline w150">
+                            <input type="text" name="app[cache_db]"
+                                placeholder="Redis数据库索引(默认0)"
+                                value="{$config['app']['cache_db']|default='0'}" class="layui-input">
                         </div>
                         <button type="button" class="layui-btn layui-btn-normal"
                             onclick="test_cache()">{:lang('admin/system/config/cache_test')}</button>
@@ -823,12 +844,13 @@
         var port = $("input[name='app[cache_port]']").val();
         var user_name = $("input[name='app[cache_username]']").val();
         var password = $("input[name='app[cache_password]']").val();
+        var db = $("input[name='app[cache_db]']").val();
         layer.msg("{:lang('wait_submit')}", { time: 500000 });
         $.ajax({
             url: "{:url('system/test_cache')}",
             type: "post",
             dataType: "json",
-            data: { type: type, host: host, port: port, username: user_name, password: password },
+            data: { type: type, host: host, port: port, username: user_name, password: password, db: db },
             beforeSend: function () {
             },
             error: function (r) {

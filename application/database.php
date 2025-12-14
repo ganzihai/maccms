@@ -2,25 +2,28 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
+// |
+// Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
+// |
+// Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 return [
     // 数据库类型
     'type'            => 'mysql',
-    // 服务器地址
-    'hostname'        => '127.0.0.1',
-    // 数据库名
-    'database'        => 'maccms',
-    // 用户名
-    'username'        => 'maccms',
-    // 密码
-    'password'        => 'maccms',
-    // 端口
-    'hostport'        => '3306',
+    // 服务器地址，从环境变量 DB_HOST 读取，否则使用默认值（Zeabur内部连接名）
+    'hostname'        => getenv('DB_HOST') ?: 'mysql.zeabur.internal',
+    // 数据库名，从环境变量 DB_DATABASE 读取
+    'database'        => getenv('DB_DATABASE') ?: 'zeabur',
+    // 用户名，从环境变量 DB_USERNAME 读取
+    'username'        => getenv('DB_USERNAME') ?: 'root',
+    // 密码，从环境变量 DB_PASSWORD 读取
+    'password'        => getenv('DB_PASSWORD') ?: '',
+  
+    // 端口，从环境变量 DB_PORT 读取
+    'hostport'        => getenv('DB_PORT') ?: '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
@@ -29,6 +32,7 @@ return [
     'charset'         => 'utf8',
     // 数据库表前缀
     'prefix'          => 'mac_',
+  
     // 数据库调试模式
     'debug'           => false,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)

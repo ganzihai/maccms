@@ -145,6 +145,7 @@ return array (
   'portrait' => '프로필 사진',
   'tpl_dir' => '템플릿 디렉토리',
   'ads_dir' => '광고 디렉토리',
+  'map_dir' => '지도 목록 ',
   'reply' => '답변',
   'reply_yes' => '답변됨',
   'reply_not' => '답변되지 않음',
@@ -352,6 +353,7 @@ return array (
   'encode_id' => '암호화 ID',
   'vod_id' => '동영상 ID',
   'art_id' => '기사 ID',
+  'manga_id' => '만화 ID',
   'topic_id' => '특집 ID',
   'actor_id' => '배우 ID',
   'role_id' => '역할 ID',
@@ -519,6 +521,8 @@ https://www.baidu.com/123.jpg
   'menu/website_data_audit' => '심사되지 않은 웹사이트',
   'menu/website_batch' => '웹사이트 일괄 작업',
   'menu/website_repeat' => '중복된 웹사이트 데이터',
+  'menu/manga_data_url_empty' => '주소 없는 만화',
+  'menu/manga_data_points' => '포인트가 필요한 만화',
   'menu/users' => '사용자',
   'menu/admin' => '관리자',
   'menu/group' => '회원 그룹',
@@ -810,6 +814,10 @@ https://www.baidu.com/123.jpg
   'admin/system/config/site_tj' => '통계 코드',
   'admin/system/config/site_status' => '사이트 상태',
   'admin/system/config/site_close_tip' => '닫기 팁',
+  'admin/system/config/mainland_ip_limit' => ' 지역 제한',
+  'admin/system/config/mainland_ip_only_allow' => '허용만',
+  'admin/system/config/mainland_ip_not_allow' => '허용하지 않음',
+  'admin/system/config/mainland_ip_limit_tip'=>'허용만: 대륙 지역의 IP 주소만 허용합니다. 허용하지 않음: 대륙 지역의 IP 주소를 허용하지 않습니다.',
   'admin/system/config/pathinfo_depr' => 'PATH 구분 기호',
   'admin/system/config/pathinfo_depr_tip' => 'PATHINFO 구분 기호 수정하면 비정적 모드의 URL 주소가 변경됩니다.',
   'admin/system/config/xg' => '슬래시 /',
@@ -955,13 +963,15 @@ https://www.baidu.com/123.jpg
                             7,분류 목록 주소 /api.php/type/get_list/<br>
                             8,사용자 목록 주소 /api.php/user/get_list/<br>
                             9,비디오 목록 주소 /api.php/vod/get_list/<br>
-                            10,웹사이트 목록 주소 /api.php/website/get_list',
+                            10,웹사이트 목록 주소 /api.php/website/get_list/<br>
+                            11,만화 목록 주소 /api.php/manga/get_list/',
   'admin/system/configcollect/title' => '수집 매개변수 구성',
   'admin/system/configcollect/vod' => '동영상 수집 설정',
   'admin/system/configcollect/art' => '기사 수집 설정',
   'admin/system/configcollect/actor' => '배우 수집 설정',
   'admin/system/configcollect/role' => '역할 수집 설정',
   'admin/system/configcollect/website' => '웹사이트 수집 설정',
+  'admin/system/configcollect/manga' => '만화 수집 설정',
   'admin/system/configcollect/comment' => '댓글 수집 설정',
   'admin/system/configcollect/status' => '데이터 상태',
   'admin/system/configcollect/words' => '수집 어휘 설정',
@@ -1200,6 +1210,11 @@ https://www.baidu.com/123.jpg
   'admin/system/configurl/vod_play' => '동영상 재생',
   'admin/system/configurl/vod_down' => '동영상 다운로드',
   'admin/system/configurl/art_detail' => '기사 자세히 보기',
+  'admin/system/configurl/manga_type' => '만화 카테고리',
+  'admin/system/configurl/manga_show' => '만화 카테고리 필터링',
+  'admin/system/configurl/manga_detail' => '만화 자세히 보기',
+  'admin/system/configurl/manga_read' => '만화 읽기',
+  'admin/system/configurl/manga_down' => '만화 다운로드',
   'admin/system/configurl/variable' => '변수',
   'admin/system/configurl/structure' => '일반적인 구조',
   'admin/system/configurl/multipage_connector' => '다중 페이지 연결 기호',
@@ -1352,7 +1367,8 @@ https://www.baidu.com/123.jpg
   'admin/domain/help_tip' => '팁 정보: <br>
                         1. 이 기능은 비정적 모드에서 동일한 데이터베이스, 다른 도메인이 다른 템플릿과 웹사이트 구성 정보를 표시하도록 지원합니다. <br>
                         2. 도메인 웹사이트 수에 제한이 없습니다. <br>
-                        3. 가져오기 텍스트 형식은 도메인$웹사이트 이름$키워드$설명$템플릿$템플릿 디렉토리$광고 디렉토리입니다. 줄당 하나의 웹사이트입니다. 기존 데이터를 지웁니다. <br>',
+                        3. 가져오기 텍스트 형식은 도메인$웹사이트 이름$키워드$설명$템플릿$템플릿 디렉토리$광고 디렉토리입니다$지도 디렉토리. 줄당 하나의 웹사이트입니다. 기존 데이터를 지웁니다. <br>
+                        4. 지도 디렉토리가 설정된 경우, 관리자는 nginx 리디렉션을 직접 구성해야 합니다. URL은 다음과 같습니다: rss/$지도 디렉토리/index.xml.<br>',
   'admin/website/title' => '웹사이트 관리',
   'admin/website/referer' => '총 리퍼러',
   'admin/website/referer_month' => '월간 리퍼러',
@@ -1412,6 +1428,8 @@ https://www.baidu.com/123.jpg
   'admin/vod/stint_play' => '에피소드당 필요한 포인트',
   'admin/vod/stint_down' => '에피소드당 다운로드에 필요한 포인트',
   'admin/vod/select_plot' => '에피소드 줄거리 선택',
+  'admin/vod/select_role' => '역할 선택',
+  'admin/vod/role' => '역할',
   'admin/vod/copyright' => '저작권',
   'admin/vod/serialize' => '연재',
   'admin/vod/add_group_play' => '재생 그룹 추가',
@@ -1513,7 +1531,7 @@ https://www.baidu.com/123.jpg
   'admin/collect/url_filter' => '주소 필터링',
   'admin/collect/no_filter' => '필터링 없음',
   'admin/collect/filter_code' => '필터 코드',
-  'admin/collect/filter_code_tip' => '여러 그룹의 주소가 있는 리소스에서 화이트리스트를 활성화하면 지정된 코드의 주소만 데이터베이스에 입력됩니다. 예: youku,iqiyi',
+  'admin/collect/filter_code_tip' => '유지할 플레이어 코드를 설정하세요(예: qq,youku), 시스템은 모든 비디오를 수집하며 지정되지 않은 플레이어는 필터링됩니다.',
   'admin/collect/filter_year' => '연도 필터링',
   'admin/collect/filter_year_tip' => '입력 후 지정된 연도의 영화만 데이터베이스에 입력됩니다. 여러 연도는 영어 반각 쉼표로 구분합니다. 예: 2022,2023',
   'admin/collect/test_ok' => '테스트 유형 성공, 인터페이스 유형',
@@ -1810,9 +1828,9 @@ https://www.baidu.com/123.jpg
                 어떠한 경우에도 저자는 이 소프트웨어의 사용 또는 사용 불가로 인해 발생하는 손해에 대해 책임을 지지 않습니다. 저자는 이 소프트웨어에 포함된 자료, 텍스트, 그래픽, 링크 또는 기타 사항의 정확성이나 완전성을 보증하지 않습니다. 저자는 언제든지 이 소프트웨어를 변경할 수 있으며 별도의 통지 없이 변경할 수 있습니다. <br />
                 사용자가 직접 제작, 다운로드, 사용하는 타사 정보 데이터 및 플러그인으로 인해 발생하는 모든 저작권 문제 또는 분쟁에 대해 이 소프트웨어는 책임을 지지 않습니다.<br /><br />
                 3. 계약에 따른 제약 및 제한: <br />
-                (Apple CMS) 소스 코드에서 저작권 정보를 제거하는 것은 금지되어 있으며 상업용 라이선스 버전에서는 백엔드 인터페이스 및 프런트엔드 인터페이스의 관련 저작권 정보를 제거할 수 있습니다.</br>
-                (Apple CMS) 전체 또는 일부를 기반으로 파생 버전, 수정 버전 또는 타사 버전을 개발하여 재배포하는 것은 금지되어 있습니다.</br></br>
-                <strong>저작권 (c) 2020, Apple CMS, 모든 권리 보유</strong>.',
+                (Apple CMS) 소스 코드에서 저작권 정보를 제거하는 것은 금지되어 있으며 상업용 라이선스 버전에서는 백엔드 인터페이스 및 프런트엔드 인터페이스의 관련 저작권 정보를 제거할 수 있습니다。</br>
+                (Apple CMS) 전체 또는 일부를 기반으로 파생 버전, 수정 버전 또는 타사 버전을 개발하여 재배포하는 것은 금지되어 있습니다。</br></br>
+                <strong>저작권 (c) 2020, Apple CMS, 모든 권리 보유</strong>。',
   'install/user_agreement_agree' => '계약에 동의하고 시스템 설치',
   'install/environment_title' => '운영 환경 검사',
   'install/environment_name' => '환경 이름',
@@ -1914,4 +1932,10 @@ https://www.baidu.com/123.jpg
   'validate/require_tpl' => '템플릿은 필수입니다.',
   'validate/require_ip' => 'IP는 필수입니다.',
   'validate/require_time' => '시간은 필수입니다.',
+  'manga' => '만화',
+  'admin/manga/title' => '만화 관리',
+  'admin/manga/new_version_notice' => '만화 모듈의 새 버전을 사용할 수 있습니다. 전체 기능을 경험하려면 새 버전의 백엔드로 전환하십시오.',
+  'admin/system/configapi/manga'=>'만화 API 설정',
+  'admin/system/configapi/manga_tip'=>'팁 정보:<br>1,만화 목록 주소 /api.php/provide/manga/?ac=list<br>2,만화 상세 주소 /api.php/provide/manga/?ac=detail',
+  'admin/system/configapi/datafilter_tip_manga'=>'SQL 쿼리 조건 예: manga_status=1',
 );

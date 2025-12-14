@@ -153,6 +153,7 @@ return [
     'portrait'=>'头像',
     'tpl_dir'=>'模板目录',
     'ads_dir'=>'广告目录',
+    'map_dir'=>'地图目录',
     'reply'=>'回复',
     'reply_yes'=>'已回复',
     'reply_not'=>'未回复',
@@ -382,6 +383,7 @@ return [
     'encode_id'=>'加密ID',
     'vod_id'=>'视频ID',
     'art_id'=>'文章ID',
+    'manga_id'=>'漫画ID',
     'type_id'=>'分类ID',
     'topic_id'=>'专题ID',
     'actor_id'=>'演员ID',
@@ -556,6 +558,8 @@ https://www.baidu.com/123.jpg
     'menu/website_data_audit'=>'未审核网址',
     'menu/website_batch'=>'批量操作网址',
     'menu/website_repeat'=>'重名网址数据',
+    'menu/manga_data_url_empty' => '无地址漫画',
+    'menu/manga_data_points' => '需积分漫画',
     'menu/users'=>'用户',
     'menu/admin'=>'管理员',
     'menu/group'=>'会员组',
@@ -882,6 +886,10 @@ https://www.baidu.com/123.jpg
     'admin/system/config/zhx'=>'中横线-',
     'admin/system/config/xhx'=>'下横线_',
     'admin/system/config/suffix'=>'页面后缀名',
+    'admin/system/config/mainland_ip_limit'=>'大陆地区限制',
+    'admin/system/config/mainland_ip_only_allow'=>'只允许',
+    'admin/system/config/mainland_ip_not_allow'=>'不允许',
+    'admin/system/config/mainland_ip_limit_tip'=>'只允许：只允许大陆地区的IP地址访问；不允许：不允许大陆地区的IP地址访问；',
 
     'admin/system/config/wall_filter'=>'假墙防御',
     'admin/system/config/wall_unicode'=>'编码方式',
@@ -1026,7 +1034,8 @@ https://www.baidu.com/123.jpg
                             7,分类列表地址/api.php/type/get_list/<br>
                             8,用户列表地址/api.php/user/get_list/<br>
                             9,视频列表地址/api.php/vod/get_list/<br>
-                            10,网址列表地址/api.php/website/get_list',
+                            10,网址列表地址/api.php/website/get_list/<br>
+                            11,漫画列表地址/api.php/manga/get_list/',
 
 
 
@@ -1037,6 +1046,7 @@ https://www.baidu.com/123.jpg
     'admin/system/configcollect/actor'=>'演员采集设置',
     'admin/system/configcollect/role'=>'角色采集设置',
     'admin/system/configcollect/website'=>'网址采集设置',
+    'admin/system/configcollect/manga' => '漫画采集设置',
     'admin/system/configcollect/comment'=>'评论采集设置',
     'admin/system/configcollect/status'=>'数据状态',
     'admin/system/configcollect/words'=>'采集词库设置',
@@ -1297,6 +1307,11 @@ https://www.baidu.com/123.jpg
     'admin/system/configurl/vod_play'=>'视频播放',
     'admin/system/configurl/vod_down'=>'视频下载',
     'admin/system/configurl/art_detail'=>'文章详情',
+    'admin/system/configurl/manga_type'=>'漫画分类',
+    'admin/system/configurl/manga_show'=>'漫画分类筛选',
+    'admin/system/configurl/manga_detail'=>'漫画详情',
+    'admin/system/configurl/manga_read'=>'漫画阅读',
+    'admin/system/configurl/manga_down'=>'漫画下载',
     'admin/system/configurl/variable'=>'变量',
     'admin/system/configurl/structure'=>'常用结构',
     'admin/system/configurl/multipage_connector'=>'多页连接符',
@@ -1476,7 +1491,8 @@ https://www.baidu.com/123.jpg
     'admin/domain/help_tip'=>'提示信息：<br>
                         1，此功能支持非静态模式下同1个数据库不同域名显示不同的模板和网站配置信息<br>
                         2，不限制域名网站数量<br>
-                        3，导入文本格式是：域名$网站名称$关键字$描述$模板$模板目录$广告目录。每行一个网站。清空原有数据。<br>',
+                        3，导入文本格式是：域名$网站名称$关键字$描述$模板$模板目录$广告目录$地圖目錄。每行一个网站。清空原有数据。<br>
+                        4. 如設置了地圖目錄需站長自行配置nginx重定向，URL為：rss/$地圖目錄/index.xml。<br>',
 
     'admin/domain/title'=>'站群管理',
 
@@ -1544,6 +1560,8 @@ https://www.baidu.com/123.jpg
     'admin/vod/stint_play'=>'点播每集所需积分',
     'admin/vod/stint_down'=>'下载每集所需积分',
     'admin/vod/select_plot'=>'选择分集剧情',
+    'admin/vod/select_role'=>'选择角色',
+    'admin/vod/role'=>'角色',
     'admin/vod/copyright'=>'版权',
     'admin/vod/serialize'=>'连载',
     'admin/vod/add_group_play'=>'添加一组播放',
@@ -1655,7 +1673,7 @@ https://www.baidu.com/123.jpg
     'admin/collect/url_filter'=>'地址过滤',
     'admin/collect/no_filter'=>'不过滤',
     'admin/collect/filter_code'=>'过滤代码',
-    'admin/collect/filter_code_tip'=>'多组地址的资源开启白名单后只会入库指定代码的地址。比如 youku,iqiyi',
+    'admin/collect/filter_code_tip'=>'设定要保留的播放器代码(如:qq,youku),系统会采集所有影片,未指定的播放器将被过滤。',
     'admin/collect/filter_year'=>'过滤年份',
     'admin/collect/filter_year_tip'=>'填写后仅入库指定年份的视频。多个年份用英文半角逗号分隔，如 2022,2023',
     'admin/collect/test_ok'=>'测试类型成功，接口类型',
@@ -2105,4 +2123,10 @@ https://www.baidu.com/123.jpg
     'validate/require_tpl'=>'模板必须',
     'validate/require_ip'=>'ip必须',
     'validate/require_time'=>'时间必须',
+    'manga' => '漫画',
+    'admin/manga/title' => '漫画管理',
+    'admin/manga/new_version_notice' => '漫画模块已有新版本可用，请切换到新版后台体验完整功能。',
+    'admin/system/configapi/manga'=>'漫画API设置',
+    'admin/system/configapi/manga_tip'=>'提示信息：<br>1,漫画列表地址/api.php/provide/manga/?ac=list<br>2,漫画详情地址/api.php/provide/manga/?ac=detail',
+    'admin/system/configapi/datafilter_tip_manga'=>'SQL查询条件例如 manga_status=1',
 ];

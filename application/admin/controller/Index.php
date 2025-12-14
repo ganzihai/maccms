@@ -4,10 +4,8 @@ namespace app\admin\controller;
 
 use think\Hook;
 use think\Db;
-use COM;
 use Exception;
-
-
+use ip_limit\IpLocationQuery;
 class Index extends Base
 {
     public function __construct()
@@ -98,6 +96,12 @@ class Index extends Base
         $this->assign('version', $version);
         $this->assign('menus', $menus);
         $this->assign('title', lang('admin/index/title'));
+        $ipQuery = new IpLocationQuery();
+        $country_code = $ipQuery->queryProvince(mac_get_client_ip());
+        if($country_code == ""){
+            $country_code = "其它";
+        }
+        $this->assign('ip_location', $country_code);
         return $this->fetch('admin@index/index');
     }
 
@@ -228,14 +232,16 @@ class Index extends Base
         }
 
         $url = url($url);
-        $mid = 1;
-        if ($tab == 'art') {
-            $mid = 2;
-        } elseif ($tab == 'actor') {
-            $mid = 8;
-        } elseif ($tab == 'website') {
-            $mid = 11;
-        }
+    $mid = 1;
+    if ($tab == 'art') {
+        $mid = 2;
+    } elseif ($tab == 'actor') {
+        $mid = 8;
+    } elseif ($tab == 'website') {
+        $mid = 11;
+    } elseif ($tab == 'manga') {
+        $mid = 12;
+    }
         $this->assign('mid', $mid);
 
         if ($tpl == 'select_type') {
@@ -276,8 +282,13 @@ class Index extends Base
             $os_data['os_name'] = strtoupper($os_name);
             
             // 获取磁盘信息
-            $totalSpace = @\disk_total_space('/');
-            $freeSpace = @\disk_free_space('/');
+            $totalSpace = 0;
+            $freeSpace = 0;
+            
+            if (function_exists('disk_total_space') && function_exists('disk_free_space')) {
+                $totalSpace = @disk_total_space('/');
+                $freeSpace = @disk_free_space('/');
+            }
             
             if ($totalSpace > 0) {
                 $totalSpaceGB = round($totalSpace / (1024 * 1024 * 1024), 2);
@@ -321,7 +332,12 @@ class Index extends Base
 
     private function get_disk_space($letter)
     {
-        //获取磁盘信息
+        // 添加函数存在性检查
+        if (!function_exists('disk_total_space') || !function_exists('disk_free_space')) {
+            return [];
+        }
+
+        // 获取磁盘信息
         $diskct = 0;
         $disk = array();
 
@@ -399,8 +415,12 @@ class Index extends Base
         }
         
         try {
-            $wmi = new \COM('WinMgmts:\\\\.');
-            $cpus = $wmi->ExecQuery('SELECT LoadPercentage FROM Win32_Processor');
+            if(class_exists('COM')){
+                $wmi = new \COM('WinMgmts:\\\\.');
+                $cpus = $wmi->ExecQuery('SELECT LoadPercentage FROM Win32_Processor');
+            } else {
+                return 0;
+            }
             
             $cpu_load = 0;
             $cpu_count = 0;
@@ -470,8 +490,16 @@ class Index extends Base
         }
         
         try {
-            $wmi = new \COM('WinMgmts:\\\\.');
-            $os = $wmi->ExecQuery('SELECT TotalVisibleMemorySize,FreePhysicalMemory FROM Win32_OperatingSystem');
+            if(class_exists('COM')){
+                $wmi = new \COM('WinMgmts:\\\\.');
+                $os = $wmi->ExecQuery('SELECT TotalVisibleMemorySize,FreePhysicalMemory FROM Win32_OperatingSystem');
+            } else {
+                return [
+                    'TotalVisibleMemorySize' => 0,
+                    'FreePhysicalMemory' => 0,
+                    'usage' => 0
+                ];
+            }
             
             foreach ($os as $item) {
                 $total = $item->TotalVisibleMemorySize;
