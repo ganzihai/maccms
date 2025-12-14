@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache
-COPY isrgrootx1.pem /etc/ssl/certs/tidb_ca.pem
+
 # 2. 启用 Apache Rewrite 模块 (用于 Maccms 伪静态)
 RUN a2enmod rewrite
 
