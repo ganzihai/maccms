@@ -9,15 +9,12 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libzip-dev \
     unzip \
-    # 安装 vim 等调试工具 (仅在开发阶段需要，正式环境可删除)
-    # vim \
     \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo_mysql zip opcache
 
-# 2. **【核心修复和优化】** 配置 Opcache
-# 创建一个自定义的 php.ini 配置片段文件
-COPY --from=mlocati/php-extension-installer /usr/local/bin/install-php-extensions /usr/local/bin/
+# 2. **【修复后的核心优化】** 配置 Opcache
+# 移除错误的 COPY --from= 命令。直接创建和写入 opcache 配置。
 RUN touch /usr/local/etc/php/conf.d/opcache-custom.ini \
     && echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/opcache-custom.ini \
     && echo "opcache.memory_consumption=128" >> /usr/local/etc/php/conf.d/opcache-custom.ini \
