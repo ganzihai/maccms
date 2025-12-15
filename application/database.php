@@ -12,16 +12,17 @@
 return [
     // 数据库类型
     'type'            => 'mysql',
-    // 服务器地址 (TiDB Cloud)
-    'hostname'        => 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com',
-    // 数据库名 (请确保 TiDB 中已创建此数据库)
-    'database'        => 'maccms',
-    // 用户名
-    'username'        => '47zRmETpMT8dGFd.root',
-    // 密码
-    'password'        => 'tn0pRckm1bPVpLN4',
-    // 端口 (TiDB 默认端口)
-    'hostport'        => '4000',
+    // 服务器地址，从环境变量 DB_HOST 读取，否则使用默认值（Zeabur内部连接名）
+    'hostname'        => getenv('DB_HOST') ?: '127.0.0.1',
+    // 数据库名，从环境变量 DB_DATABASE 读取
+    'database'        => getenv('DB_DATABASE') ?: 'maccms',
+    // 用户名，从环境变量 DB_USERNAME 读取
+    'username'        => getenv('DB_USERNAME') ?: 'maccms',
+    // 密码，从环境变量 DB_PASSWORD 读取
+    'password'        => getenv('DB_PASSWORD') ?: '',
+  
+    // 端口，从环境变量 DB_PORT 读取
+    'hostport'        => getenv('DB_PORT') ?: '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数 (配置 SSL 连接)
