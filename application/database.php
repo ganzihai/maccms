@@ -2,37 +2,39 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// |
-// Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// |
-// Author: liu21st <liu21st@gmail.com>
+// | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+
 return [
     // 数据库类型
     'type'            => 'mysql',
-    // 服务器地址，从环境变量 DB_HOST 读取，否则使用默认值（Zeabur内部连接名）
-    'hostname'        => getenv('DB_HOST') ?: '127.0.0.1',
-    // 数据库名，从环境变量 DB_DATABASE 读取
-    'database'        => getenv('DB_DATABASE') ?: 'maccms',
-    // 用户名，从环境变量 DB_USERNAME 读取
-    'username'        => getenv('DB_USERNAME') ?: 'maccms',
-    // 密码，从环境变量 DB_PASSWORD 读取
-    'password'        => getenv('DB_PASSWORD') ?: '',
-  
-    // 端口，从环境变量 DB_PORT 读取
-    'hostport'        => getenv('DB_PORT') ?: '3306',
+    // 服务器地址 (TiDB Cloud)
+    'hostname'        => 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com',
+    // 数据库名 (请确保 TiDB 中已创建此数据库)
+    'database'        => 'maccms',
+    // 用户名
+    'username'        => '47zRmETpMT8dGFd.root',
+    // 密码
+    'password'        => 'tn0pRckm1bPVpLN4',
+    // 端口 (TiDB 默认端口)
+    'hostport'        => '4000',
     // 连接dsn
     'dsn'             => '',
-    // 数据库连接参数
-    'params'          => [],
+    // 数据库连接参数 (配置 SSL 连接)
+    'params'          => [
+        // 设置 CA 证书路径
+        \PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/addons/ca-certificates.crt',
+        // 开启服务器证书验证 (对应 --ssl-mode=VERIFY_IDENTITY)
+        \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
+    ],
     // 数据库编码默认采用utf8
     'charset'         => 'utf8',
     // 数据库表前缀
     'prefix'          => 'mac_',
-  
     // 数据库调试模式
     'debug'           => false,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
@@ -56,5 +58,5 @@ return [
     // Builder类
     'builder'         => '',
     // Query类
-    'query'           => '\think\db\Query',
+    'query'           => '\\think\\db\\Query',
 ];
